@@ -1,0 +1,16 @@
+kind: pipeline
+name: dev
+steps:
+  - name: build
+    image: node:latest
+    commands:
+      - sed -i "s#\"username\":[^,]*#\"username\":$USERNAME#g" .env
+      - sed -i "s#\"password\":[^,]*#\"password\":$PASSWORD#g" .env
+    environment:
+      USERNAME:
+        from_secret: dev_username
+      PASSWORD:
+        from_secret: dev_password
+trigger:
+  branch:
+    dev
